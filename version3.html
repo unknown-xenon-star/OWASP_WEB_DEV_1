@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Cybersecurity OWASP Consortium</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+/* RESET */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+/* COLORS */
+
+:root{
+
+--bg:#020617;
+--panel:#0b1220;
+
+--accent:#00ff9f;
+--accent2:#00e5ff;
+
+--text:#e2e8f0;
+--muted:#94a3b8;
+
+}
+
+/* BODY */
+
+body{
+
+font-family:'Share Tech Mono', monospace;
+
+background:radial-gradient(circle at top,#0b1220,#020617);
+
+color:var(--text);
+
+overflow-x:hidden;
+
+}
+
+/* GRID BACKGROUND */
+
+body::before{
+
+content:"";
+position:fixed;
+inset:0;
+
+background-image:
+linear-gradient(rgba(0,255,159,.05) 1px,transparent 1px),
+linear-gradient(90deg,rgba(0,255,159,.05) 1px,transparent 1px);
+
+background-size:40px 40px;
+
+pointer-events:none;
+
+}
+
+/* SCANLINES */
+
+body::after{
+
+content:"";
+position:fixed;
+inset:0;
+
+background:repeating-linear-gradient(
+transparent,
+transparent 2px,
+rgba(0,0,0,.35) 3px
+);
+
+pointer-events:none;
+
+}
+
+/* NAVBAR */
+
+.navbar{
+
+position:fixed;
+top:0;
+width:100%;
+
+background:rgba(5,10,20,.9);
+
+border-bottom:1px solid rgba(0,255,159,.25);
+
+backdrop-filter:blur(10px);
+
+z-index:999;
+
+}
+
+.nav-container{
+
+max-width:1200px;
+margin:auto;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+padding:15px;
+
+}
+
+.logo{
+
+color:var(--accent);
+
+font-size:1.4rem;
+
+text-decoration:none;
+
+}
+
+/* NAV LINKS */
+
+.nav-links{
+
+display:flex;
+gap:25px;
+list-style:none;
+
+}
+
+.nav-links a{
+
+color:var(--text);
+text-decoration:none;
+
+}
+
+.nav-links a:hover{
+
+color:var(--accent);
+
+}
+
+/* HERO */
+
+.hero{
+
+min-height:100vh;
+
+display:flex;
+align-items:center;
+
+padding-top:80px;
+
+}
+
+.hero-inner{
+
+max-width:1200px;
+margin:auto;
+
+display:grid;
+grid-template-columns:1fr 1fr;
+
+gap:40px;
+
+padding:30px;
+
+}
+
+.hero h1{
+
+font-size:3rem;
+
+color:var(--accent);
+
+text-shadow:
+0 0 10px var(--accent),
+0 0 25px var(--accent);
+
+}
+
+.hero p{
+
+margin-top:15px;
+color:var(--muted);
+
+}
+
+/* BUTTONS */
+
+.btn{
+
+padding:12px 22px;
+
+border-radius:10px;
+
+text-decoration:none;
+
+cursor:pointer;
+
+display:inline-block;
+
+margin-top:20px;
+
+}
+
+.btn-primary{
+
+background:var(--accent);
+
+color:black;
+
+box-shadow:0 0 15px rgba(0,255,159,.6);
+
+}
+
+.btn-primary:hover{
+
+box-shadow:
+0 0 10px var(--accent),
+0 0 30px var(--accent),
+0 0 60px var(--accent);
+
+transform:translateY(-2px);
+
+}
+
+/* SECTIONS */
+
+.section{
+
+max-width:1200px;
+margin:auto;
+
+padding:80px 20px;
+
+}
+
+.section-title{
+
+text-align:center;
+font-size:2rem;
+
+color:var(--accent);
+
+margin-bottom:40px;
+
+}
+
+.section-title::before{
+
+content:"> ";
+color:var(--accent2);
+
+}
+
+/* GRID */
+
+.grid{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+
+gap:30px;
+
+}
+
+/* CARD */
+
+.card{
+
+background:rgba(10,15,25,.8);
+
+border:1px solid rgba(0,255,159,.2);
+
+padding:30px;
+
+border-radius:15px;
+
+transition:.3s;
+
+}
+
+.card:hover{
+
+transform:translateY(-6px);
+
+border-color:var(--accent);
+
+box-shadow:0 0 25px rgba(0,255,159,.35);
+
+}
+
+/* ICON */
+
+.card i{
+
+font-size:2rem;
+color:var(--accent);
+
+margin-bottom:15px;
+
+}
+
+/* STATS */
+
+.stats{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+
+text-align:center;
+
+gap:20px;
+
+}
+
+.stat-number{
+
+font-size:3rem;
+
+color:var(--accent);
+
+text-shadow:0 0 15px var(--accent);
+
+}
+
+/* TEAM */
+
+.team img{
+
+width:100px;
+height:100px;
+
+border-radius:50%;
+
+margin-bottom:15px;
+
+}
+
+/* FAQ */
+
+.faq{
+
+max-width:800px;
+margin:auto;
+
+}
+
+.faq-item{
+
+border-bottom:1px solid #334155;
+
+padding:15px 0;
+
+}
+
+.faq-question{
+
+cursor:pointer;
+
+display:flex;
+justify-content:space-between;
+
+}
+
+.faq-answer{
+
+max-height:0;
+
+overflow:hidden;
+
+color:var(--muted);
+
+transition:.3s;
+
+}
+
+/* CONTACT */
+
+.contact input,
+.contact textarea{
+
+width:100%;
+
+padding:12px;
+
+margin-bottom:10px;
+
+background:#020617;
+
+border:1px solid #334155;
+
+color:white;
+
+}
+
+/* FOOTER */
+
+.footer{
+
+text-align:center;
+
+padding:40px;
+
+border-top:1px solid rgba(0,255,159,.2);
+
+background:#010409;
+
+}
+
+/* RESPONSIVE */
+
+@media(max-width:800px){
+
+.hero-inner{
+
+grid-template-columns:1fr;
+text-align:center;
+
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+<div class="nav-container">
+
+<a class="logo">OWASP Consortium</a>
+
+<ul class="nav-links">
+
+<li><a href="#about">About</a></li>
+<li><a href="#training">Training</a></li>
+<li><a href="#stats">Stats</a></li>
+<li><a href="#team">Team</a></li>
+<li><a href="#contact">Contact</a></li>
+
+</ul>
+
+</div>
+
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="hero-inner">
+
+<div>
+
+<h1>Cybersecurity OWASP Consortium</h1>
+
+<p>
+
+Empowering developers with advanced cybersecurity training,
+ethical hacking labs and OWASP secure coding practices.
+
+</p>
+
+<a class="btn btn-primary">Join Training</a>
+
+</div>
+
+<div>
+
+<img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b"
+style="width:100%;border-radius:15px">
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ABOUT -->
+
+<section id="about" class="section">
+
+<h2 class="section-title">Our Mission</h2>
+
+<p style="text-align:center;color:var(--muted);max-width:700px;margin:auto">
+
+We build a global community dedicated to improving software security
+through education, research, and OWASP practices.
+
+</p>
+
+</section>
+
+<!-- TRAINING -->
+
+<section id="training" class="section">
+
+<h2 class="section-title">Training Programs</h2>
+
+<div class="grid">
+
+<div class="card">
+
+<i class="fas fa-shield-halved"></i>
+
+<h3>Secure Coding</h3>
+
+<p>Learn OWASP Top 10 vulnerabilities and prevention.</p>
+
+</div>
+
+<div class="card">
+
+<i class="fas fa-terminal"></i>
+
+<h3>Ethical Hacking</h3>
+
+<p>Hands-on penetration testing and security labs.</p>
+
+</div>
+
+<div class="card">
+
+<i class="fas fa-flag"></i>
+
+<h3>CTF Challenges</h3>
+
+<p>Real-world capture-the-flag cybersecurity challenges.</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- STATS -->
+
+<section id="stats" class="section">
+
+<h2 class="section-title">Community Stats</h2>
+
+<div class="stats">
+
+<div>
+
+<div class="stat-number" data-target="150">0</div>
+Members
+
+</div>
+
+<div>
+
+<div class="stat-number" data-target="45">0</div>
+Workshops
+
+</div>
+
+<div>
+
+<div class="stat-number" data-target="12">0</div>
+Events
+
+</div>
+
+<div>
+
+<div class="stat-number" data-target="500">0</div>
+Students
+
+</div>
+
+</div>
+
+</section>
+
+<!-- TEAM -->
+
+<section id="team" class="section">
+
+<h2 class="section-title">Our Team</h2>
+
+<div class="grid team">
+
+<div class="card">
+
+<img src="https://randomuser.me/api/portraits/men/32.jpg">
+
+<h3>David Patel</h3>
+
+<p>Lead Trainer</p>
+
+</div>
+
+<div class="card">
+
+<img src="https://randomuser.me/api/portraits/women/44.jpg">
+
+<h3>Sofia Kim</h3>
+
+<p>Security Researcher</p>
+
+</div>
+
+<div class="card">
+
+<img src="https://randomuser.me/api/portraits/men/50.jpg">
+
+<h3>Rahul Singh</h3>
+
+<p>CTF Coordinator</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- FAQ -->
+
+<section class="section">
+
+<h2 class="section-title">FAQ</h2>
+
+<div class="faq">
+
+<div class="faq-item">
+
+<div class="faq-question">
+
+What is OWASP?
+<i class="fas fa-chevron-down"></i>
+
+</div>
+
+<div class="faq-answer">
+
+OWASP is an open community dedicated to improving software security.
+
+</div>
+
+</div>
+
+<div class="faq-item">
+
+<div class="faq-question">
+
+Who can join?
+<i class="fas fa-chevron-down"></i>
+
+</div>
+
+<div class="faq-answer">
+
+Developers, students, security engineers and anyone interested in cybersecurity.
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- CONTACT -->
+
+<section id="contact" class="section contact">
+
+<h2 class="section-title">Contact</h2>
+
+<div style="max-width:500px;margin:auto">
+
+<input placeholder="Name">
+
+<input placeholder="Email">
+
+<textarea placeholder="Message"></textarea>
+
+<button class="btn btn-primary" style="width:100%">Send Message</button>
+
+</div>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer class="footer">
+
+<p>© 2026 Cybersecurity OWASP Consortium</p>
+
+</footer>
+
+<script>
+
+/* COUNTER ANIMATION */
+
+const counters=document.querySelectorAll("[data-target]")
+
+counters.forEach(counter=>{
+
+let target=+counter.dataset.target
+
+let count=0
+
+let step=target/100
+
+function update(){
+
+count+=step
+
+if(count<target){
+
+counter.innerText=Math.floor(count)
+
+requestAnimationFrame(update)
+
+}else{
+
+counter.innerText=target+"+"
+
+}
+
+}
+
+update()
+
+})
+
+/* FAQ */
+
+document.querySelectorAll(".faq-question").forEach(q=>{
+
+q.addEventListener("click",()=>{
+
+let a=q.nextElementSibling
+
+a.style.maxHeight=
+a.style.maxHeight ? null : a.scrollHeight+"px"
+
+})
+
+})
+
+</script>
+
+</body>
+</html>
