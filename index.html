@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cybersecurity OWASP Consortium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Color Palette */
+        :root {
+            --primary: #0a2540;
+            --accent: #00d4aa;
+            --accent-dark: #00b894;
+            --gray-100: #f8fafc;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --gray-900: #0f172a;
+            --white: #ffffff;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--gray-700);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary);
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--gray-100) 0%, var(--white) 100%);
+            padding: 0 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 4rem;
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 4px 20px rgba(0, 212, 170, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 212, 170, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--gray-200);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 3rem;
+        }
+
+        /* Two Column Layout */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .text-content {
+            font-size: 1.1rem;
+            color: var(--gray-600);
+            line-height: 1.8;
+        }
+
+        .section-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid var(--gray-100);
+            height: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .card p {
+            color: var(--gray-600);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Features Cards */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: white;
+        }
+
+        /* Events Grid */
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .event-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+        }
+
+        .event-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--accent);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Stats Section */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            font-size: 1.1rem;
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        /* Testimonials */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .testimonial-card {
+            text-align: center;
+            padding: 2.5rem;
+        }
+
+        .stars {
+            color: #fbbf24;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        /* FAQ Accordion */
+        .faq-item {
+            border-bottom: 1px solid var(--gray-200);
+            margin-bottom: 1rem;
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            color: var(--gray-600);
+            padding-right: 2rem;
+        }
+
+        .faq-answer.active {
+            max-height: 200px;
+            padding: 1rem 0;
+        }
+
+        /* Team Grid */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .team-card {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .team-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            object-fit: cover;
+            border: 4px solid var(--gray-100);
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background: var(--gray-900);
+            color: white;
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .newsletter input {
+            max-width: 400px;
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 50px 0 0 50px;
+            font-size: 1rem;
+        }
+
+        .newsletter-btn {
+            padding: 1rem 2rem;
+            border: none;
+            background: var(--accent);
+            color: white;
+            border-radius: 0 50px 50px 0;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--gray-900);
+            color: var(--gray-300);
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer h4 {
+            color: white;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .footer a {
+            color: var(--gray-300);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: var(--accent);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icons a {
+            width: 40px;
+            height: 40px;
+            background: var(--gray-800);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 100%;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: white;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                padding-top: 2rem;
+                transition: left 0.3s ease;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                gap: 2rem;
+                padding-top: 120px;
+            }
+
+            .cta-buttons {
+                justify-content: center;
+            }
+
+            .two-col,
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .cards-grid,
+            .events-grid,
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .section {
+                padding: 4rem 1rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">OWASP Consortium</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#about">About</a></li>
+                <li><a href="#training">Training</a></li>
+                <li><a href="#events">Events</a></li>
+                <li><a href="#team">Team</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero fade-in">
+        <div class="hero-content">
+            <h1>Cybersecurity OWASP Consortium</h1>
+            <p>Empowering developers and organizations with cutting-edge cybersecurity knowledge and hands-on training to build secure applications from the ground up.</p>
+            <div class="cta-buttons">
+                <a href="#training" class="btn btn-primary">
+                    <i class="fas fa-rocket"></i>
+                    Get Started
+                </a>
+                <a href="#about" class="btn btn-secondary">
+                    Learn More
+                </a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Cybersecurity">
+        </div>
+    </section>
+
+    <!-- Mission/About Section -->
+    <section id="about" class="section">
+        <h2 class="section-title">Our Mission</h2>
+        <div class="two-col">
+            <div class="text-content fade-in">
+                <p>We are dedicated to advancing cybersecurity education through the OWASP methodology. Our consortium brings together industry experts, developers, and security professionals to create comprehensive training programs and foster a global community committed to secure software development.</p>
+                <p>From intensive workshops to hands-on labs, we equip participants with practical skills to identify, prevent, and mitigate the latest security threats.</p>
+            </div>
+            <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Mission" class="section-image fade-in">
+        </div>
+    </section>
+
+    <!-- Training Section -->
+    <section id="training" class="section" style="background: var(--gray-100);">
+        <h2 class="section-title">Training Programs</h2>
+        <div class="cards-grid">
+            <div class="card fade-in">
+                <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Training" style="width:100%; height:200px; object-fit:cover; border-radius:12px; margin-bottom:1.5rem;">
+                <h3>Intensive Training Sessions</h3>
+                <p>Deep-dive workshops covering OWASP Top 10, secure coding practices, and advanced penetration testing techniques with real-world scenarios.</p>
+                <a href="#" class="btn btn-primary">Join Training</a>
+            </div>
+            <div class="card fade-in">
+                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Workshops" style="width:100%; height:200px; object-fit:cover; border-radius:12px; margin-bottom:1.5rem;">
+                <h3>Interactive Workshops</h3>
+                <p>Hands-on labs and capture-the-flag challenges designed to build practical cybersecurity skills through collaborative learning.</p>
+                <a href="#" class="btn btn-primary">View Schedule</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section">
+        <h2 class="section-title">What We Offer</h2>
+        <div class="features-grid">
+            <div class="feature-card card fade-in">
+                <div class="feature-icon">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <h3>Mentorship</h3>
+                <p>Personalized guidance from industry experts and OWASP leaders to accelerate your cybersecurity career.</p>
+            </div>
+            <div class="feature-card card fade-in">
+                <div class="feature-icon">
+                    <i class="fas fa-hands-helping"></i>
+                </div>
+                <h3>Hands-on Learning</h3>
+                <p>Practical labs, CTF challenges, and real-world projects that build production-ready security skills.</p>
+            </div>
+            <div class="feature-card card fade-in">
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>Security Community</h3>
+                <p>Join a global network of cybersecurity professionals, developers, and researchers.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section id="events" class="section" style="background: var(--gray-100);">
+        <h2 class="section-title">Upcoming Events</h2>
+        <div class="events-grid">
+            <div class="event-card card fade-in">
+                <div class="event-badge">March 25, 2026</div>
+                <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Event" style="width:100%; height:250px; object-fit:cover;">
+                <div style="padding:1.5rem;">
+                    <h3>OWASP Global Summit</h3>
+                    <p>Annual cybersecurity conference featuring keynotes from industry leaders and hands-on workshops.</p>
+                </div>
+            </div>
+            <div class="event-card card fade-in">
+                <div class="event-badge">April 15, 2026</div>
+                <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Event" style="width:100%; height:250px; object-fit:cover;">
+                <div style="padding:1.5rem;">
+                    <h3>Secure Coding Bootcamp</h3>
+                    <p>3-day intensive training on secure software development practices and vulnerability assessment.</p>
+                </div>
+            </div>
+            <div class="event-card card fade-in">
+                <div class="event-badge">May 10, 2026</div>
+                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Event" style="width:100%; height:250px; object-fit:cover;">
+                <div style="padding:1.5rem;">
+                    <h3>Capture The Flag Challenge</h3>
+                    <p>Competitive hacking challenge with real-world scenarios and significant cash prizes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="section">
+        <div class="stats-grid">
+            <div class="stat-item fade-in">
+                <h3 data-target="150">0</h3>
+                <p>Members</p>
+            </div>
+            <div class="stat-item fade-in">
+                <h3 data-target="45">0</h3>
+                <p>Workshops</p>
+            </div>
+            <div class="stat-item fade-in">
+                <h3 data-target="12">0</h3>
+                <p>Events</p>
+            </div>
+            <div class="stat-item fade-in">
+                <h3 data-target="500">0</h3>
+                <p>Trained</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section" style="background: var(--gray-100);">
+        <h2 class="section-title">What People Say</h2>
+        <div class="testimonials-grid">
+            <div class="testimonial-card card fade-in">
+                <div class="stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p>"The hands-on training transformed my approach to secure coding. Real-world scenarios made all the difference."</p>
+                <h4> Sarah Chen</h4>
+                <p style="color: var(--gray-500); font-weight: 500;">Senior Developer</p>
+            </div>
+            <div class="testimonial-card card fade-in">
+                <div class="stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p>"Best cybersecurity community I've found. The mentorship program accelerated my career significantly."</p>
+                <h4> Michael Rodriguez</h4>
+                <p style="color: var(--gray-500); font-weight: 500;">Security Engineer</p>
+            </div>
+            <div class="testimonial-card card fade-in">
+                <div class="stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p>"CTF events are incredibly practical. Learned more in one weekend than months of theory."</p>
+                <h4> Priya Sharma</h4>
+                <p style="color: var(--gray-500); font-weight: 500;">DevSecOps Lead</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="team" class="section">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <div style="max-width: 800px; margin: 0 auto;">
+            <div class="faq-item fade-in">
+                <div class="faq-question">
+                    <span>What is OWASP?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>OWASP (Open Web Application Security Project) is a nonprofit foundation that works to improve the security of software. We're dedicated to providing unbiased, practical information.</p>
+                </div>
+            </div>
+            <div class="faq-item fade-in">
+                <div class="faq-question">
+                    <span>Who should attend training?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Developers, security engineers, DevOps professionals, and anyone involved in building or securing web applications. No prior cybersecurity experience required.</p>
+                </div>
+            </div>
+            <div class="faq-item fade-in">
+                <div class="faq-question">
+                    <span>Are certificates provided?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes! All participants receive OWASP Consortium certificates of completion recognized by industry leaders.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="contact" class="section" style="background: var(--gray-100);">
+        <h2 class="section-title">Our Team</h2>
+        <div class="team-grid">
+            <div class="team-card card fade-in">
+                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Team" class="team-photo">
+                <h3>Dr. Alice Johnson</h3>
+                <p>Chief Security Architect</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+            <div class="team-card card fade-in">
+                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Team" class="team-photo">
+                <h3>David Patel</h3>
+                <p>Lead Trainer</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="team-card card fade-in">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Team" class="team-photo">
+                <h3>Sofia Kim</h3>
+                <p>Events Director</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+            <div class="team-card card fade-in">
+                <img src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Team" class="team-photo">
+                <h3>Rahul Singh</h3>
+                <p>Workshop Coordinator</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="team-card card fade-in">
+                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Team" class="team-photo">
+                <h3>Emma Wilson</h3>
+                <p>Community Manager</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+            <div class="team-card card fade-in">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Team" class="team-photo">
+                <h3>Carlos Rivera</h3>
+                <p>Technical Advisor</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="contact-grid">
+            <form class="fade-in" style="max-width:500px;">
+                <div class="form-group">
+                    <input type="text" placeholder="Your Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="Your Email" required>
+                </div>
+                <div class="form-group">
+                    <textarea rows="5" placeholder="Your Message" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;">Send Message</button>
+            </form>
+            <div class="fade-in">
+                <img src="https://images.unsplash.com/photo-1559526324-4b87b5e90fd5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Contact" class="section-image">
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <h2 style="font-size:2.5rem; margin-bottom:1rem;">Stay Updated</h2>
+        <p style="margin-bottom:2rem; opacity:0.9;">Subscribe to get the latest cybersecurity news and event updates</p>
+        <div style="max-width:600px; margin:0 auto; display:flex;">
+            <input type="email" placeholder="Enter your email" style="flex:1;">
+            <button class="newsletter-btn">Subscribe</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <h4>OWASP Consortium</h4>
+                <p>Empowering the next generation of cybersecurity professionals through education, training, and community.</p>
+            </div>
+            <div>
+                <h4>Resources</h4>
+                <a href="#">OWASP Top 10</a>
+                <a href="#">Cheat Sheets</a>
+                <a href="#">Documentation</a>
+                <a href="#">Tools</a>
+            </div>
+            <div>
+                <h4>Community</h4>
+                <a href="#">Local Chapters</a>
+                <a href="#">Forum</a>
+                <a href="#">Slack</a>
+                <a href="#">Contribute</a>
+            </div>
+            <div>
+                <h4>Connect</h4>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div style="text-align:center; padding-top:2rem; border-top:1px solid var(--gray-800); color:var(--gray-500);">
+            <p>&copy; 2026 Cybersecurity OWASP Consortium. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Navbar Background on Scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+                navbar.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.15)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            }
+        });
+
+        // Counter Animation
+        const animateCounters = () => {
+            const counters = document.querySelectorAll('[data-target]');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const increment = target / 100;
+                let current = 0;
+                
+                const updateCounter = () => {
+                    if (current < target) {
+                        current += increment;
+                        counter.textContent = Math.floor(current) + (target > 100 ? '+' : '');
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target + '+';
+                    }
+                };
+                updateCounter();
+            });
+        };
+
+        // Intersection Observer for Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                    if (entry.target.querySelector('[data-target]')) {
+                        animateCounters();
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const icon = question.querySelector('i');
+                
+                answer.classList.toggle('active');
+                icon.style.transform = answer.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+            });
+        });
+
+        // Form Submission
+        document.querySelector('form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your message! We\'ll get back to you soon.');
+            e.target.reset();
+        });
+
+        // Newsletter Submission
+        document.querySelector('.newsletter-btn').addEventListener('click', (e) => {
+            const email = document.querySelector('.newsletter input').value;
+            if (email) {
+                alert('Thank you for subscribing!');
+                document.querySelector('.newsletter input').value = '';
+            }
+        });
+    </script>
+</body>
+</html>
+
