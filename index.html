@@ -1,759 +1,378 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Cybersecurity OWASP Consortium</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-<style>
-
-/* RESET */
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-/* COLORS */
-
-:root{
-
---bg:#020617;
---panel:#0b1220;
-
---accent:#00ff9f;
---accent2:#00e5ff;
-
---text:#e2e8f0;
---muted:#94a3b8;
-
-}
-
-/* BODY */
-
-body{
-
-font-family:'Share Tech Mono', monospace;
-
-background:radial-gradient(circle at top,#0b1220,#020617);
-
-color:var(--text);
-
-overflow-x:hidden;
-
-}
-
-/* GRID BACKGROUND */
-
-body::before{
-
-content:"";
-position:fixed;
-inset:0;
-
-background-image:
-linear-gradient(rgba(0,255,159,.05) 1px,transparent 1px),
-linear-gradient(90deg,rgba(0,255,159,.05) 1px,transparent 1px);
-
-background-size:40px 40px;
-
-pointer-events:none;
-
-}
-
-/* SCANLINES */
-
-body::after{
-
-content:"";
-position:fixed;
-inset:0;
-
-background:repeating-linear-gradient(
-transparent,
-transparent 2px,
-rgba(0,0,0,.35) 3px
-);
-
-pointer-events:none;
-
-}
-
-/* NAVBAR */
-
-.navbar{
-
-position:fixed;
-top:0;
-width:100%;
-
-background:rgba(5,10,20,.9);
-
-border-bottom:1px solid rgba(0,255,159,.25);
-
-backdrop-filter:blur(10px);
-
-z-index:999;
-
-}
-
-.nav-container{
-
-max-width:1200px;
-margin:auto;
-
-display:flex;
-justify-content:space-between;
-align-items:center;
-
-padding:15px;
-
-}
-
-.logo{
-
-color:var(--accent);
-
-font-size:1.4rem;
-
-text-decoration:none;
-
-}
-
-/* NAV LINKS */
-
-.nav-links{
-
-display:flex;
-gap:25px;
-list-style:none;
-
-}
-
-.nav-links a{
-
-color:var(--text);
-text-decoration:none;
-
-}
-
-.nav-links a:hover{
-
-color:var(--accent);
-
-}
-
-/* HERO */
-
-.hero{
-
-min-height:100vh;
-
-display:flex;
-align-items:center;
-
-padding-top:80px;
-
-}
-
-.hero-inner{
-
-max-width:1200px;
-margin:auto;
-
-display:grid;
-grid-template-columns:1fr 1fr;
-
-gap:40px;
-
-padding:30px;
-
-}
-
-.hero h1{
-
-font-size:3rem;
-
-color:var(--accent);
-
-text-shadow:
-0 0 10px var(--accent),
-0 0 25px var(--accent);
-
-}
-
-.hero p{
-
-margin-top:15px;
-color:var(--muted);
-
-}
-
-/* BUTTONS */
-
-.btn{
-
-padding:12px 22px;
-
-border-radius:10px;
-
-text-decoration:none;
-
-cursor:pointer;
-
-display:inline-block;
-
-margin-top:20px;
-
-}
-
-.btn-primary{
-
-background:var(--accent);
-
-color:black;
-
-box-shadow:0 0 15px rgba(0,255,159,.6);
-
-}
-
-.btn-primary:hover{
-
-box-shadow:
-0 0 10px var(--accent),
-0 0 30px var(--accent),
-0 0 60px var(--accent);
-
-transform:translateY(-2px);
-
-}
-
-/* SECTIONS */
-
-.section{
-
-max-width:1200px;
-margin:auto;
-
-padding:80px 20px;
-
-}
-
-.section-title{
-
-text-align:center;
-font-size:2rem;
-
-color:var(--accent);
-
-margin-bottom:40px;
-
-}
-
-.section-title::before{
-
-content:"> ";
-color:var(--accent2);
-
-}
-
-/* GRID */
-
-.grid{
-
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-
-gap:30px;
-
-}
-
-/* CARD */
-
-.card{
-
-background:rgba(10,15,25,.8);
-
-border:1px solid rgba(0,255,159,.2);
-
-padding:30px;
-
-border-radius:15px;
-
-transition:.3s;
-
-}
-
-.card:hover{
-
-transform:translateY(-6px);
-
-border-color:var(--accent);
-
-box-shadow:0 0 25px rgba(0,255,159,.35);
-
-}
-
-/* ICON */
-
-.card i{
-
-font-size:2rem;
-color:var(--accent);
-
-margin-bottom:15px;
-
-}
-
-/* STATS */
-
-.stats{
-
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-
-text-align:center;
-
-gap:20px;
-
-}
-
-.stat-number{
-
-font-size:3rem;
-
-color:var(--accent);
-
-text-shadow:0 0 15px var(--accent);
-
-}
-
-/* TEAM */
-
-.team img{
-
-width:100px;
-height:100px;
-
-border-radius:50%;
-
-margin-bottom:15px;
-
-}
-
-/* FAQ */
-
-.faq{
-
-max-width:800px;
-margin:auto;
-
-}
-
-.faq-item{
-
-border-bottom:1px solid #334155;
-
-padding:15px 0;
-
-}
-
-.faq-question{
-
-cursor:pointer;
-
-display:flex;
-justify-content:space-between;
-
-}
-
-.faq-answer{
-
-max-height:0;
-
-overflow:hidden;
-
-color:var(--muted);
-
-transition:.3s;
-
-}
-
-/* CONTACT */
-
-.contact input,
-.contact textarea{
-
-width:100%;
-
-padding:12px;
-
-margin-bottom:10px;
-
-background:#020617;
-
-border:1px solid #334155;
-
-color:white;
-
-}
-
-/* FOOTER */
-
-.footer{
-
-text-align:center;
-
-padding:40px;
-
-border-top:1px solid rgba(0,255,159,.2);
-
-background:#010409;
-
-}
-
-/* RESPONSIVE */
-
-@media(max-width:800px){
-
-.hero-inner{
-
-grid-template-columns:1fr;
-text-align:center;
-
-}
-
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OWASP Consortium | Secure the Future</title>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg: #020617;
+            --panel: rgba(15, 23, 42, 0.8);
+            --accent: #00ff9f;
+            --accent-glow: rgba(0, 255, 159, 0.3);
+            --accent2: #00e5ff;
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --border: rgba(0, 255, 159, 0.15);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Share Tech Mono', monospace;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- ENHANCED BACKGROUND --- */
+        .bg-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 50% 0%, rgba(0, 229, 255, 0.05), transparent 40%),
+                radial-gradient(circle at 0% 100%, rgba(0, 255, 159, 0.05), transparent 40%);
+        }
+
+        .grid-bg {
+            position: fixed;
+            inset: 0;
+            background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 50px 50px;
+            mask-image: radial-gradient(ellipse at center, black, transparent 80%);
+            z-index: -1;
+        }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            position: fixed;
+            top: 0; width: 100%;
+            background: rgba(2, 6, 23, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items:center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links { display: flex; gap: 30px; list-style: none; }
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { color: var(--accent); text-shadow: 0 0 8px var(--accent); }
+
+        /* --- HERO --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 100px 2rem 50px;
+        }
+
+        .hero-inner {
+            max-width: 1200px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            line-height: 1.1;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p { font-size: 1.2rem; color: var(--muted); margin-bottom: 30px; }
+
+        .hero-image-wrap {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(0, 255, 159, 0.1);
+            border: 1px solid var(--border);
+        }
+
+        .hero-image-wrap img { width: 100%; display: block; filter: grayscale(0.5) contrast(1.2); }
+
+        /* --- COMPONENTS --- */
+        .btn {
+            padding: 14px 32px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            transition: 0.4s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #000;
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px var(--accent-glow);
+            filter: brightness(1.1);
+        }
+
+        .section { padding: 100px 2rem; max-width: 1200px; margin: auto; }
+        .section-title {
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+        }
+        .section-title span { color: var(--accent); }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            padding: 40px;
+            border-radius: 12px;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            transform: translateX(-100%);
+            transition: 0.6s;
+        }
+
+        .card:hover::before { transform: translateX(100%); }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            background: rgba(15, 23, 42, 0.95);
+        }
+
+        .card i { font-size: 2.5rem; color: var(--accent); margin-bottom: 20px; }
+
+        /* --- CONTACT FORM --- */
+        .terminal-form {
+            background: #010409;
+            padding: 30px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; color: var(--accent); margin-bottom: 8px; font-size: 0.8rem; }
+        
+        .terminal-input {
+            width: 100%;
+            background: rgba(2, 6, 23, 0.5);
+            border: 1px solid #1e293b;
+            padding: 12px;
+            color: var(--accent);
+            font-family: 'Share Tech Mono', monospace;
+            outline: none;
+        }
+
+        .terminal-input:focus { border-color: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
+
+        /* --- REVEAL ANIMATION --- */
+        .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 900px) {
+            .hero-inner { grid-template-columns: 1fr; text-align: center; }
+            .nav-links { display: none; }
+        }
+    </style>
 </head>
-
 <body>
 
-<!-- NAVBAR -->
-
-<nav class="navbar">
-
-<div class="nav-container">
-
-<a class="logo">OWASP Consortium</a>
-
-<ul class="nav-links">
-
-<li><a href="#about">About</a></li>
-<li><a href="#training">Training</a></li>
-<li><a href="#stats">Stats</a></li>
-<li><a href="#team">Team</a></li>
-<li><a href="#contact">Contact</a></li>
-
-</ul>
-
-</div>
-
-</nav>
-
-<!-- HERO -->
-
-<section class="hero">
-
-<div class="hero-inner">
-
-<div>
-
-<h1>Cybersecurity OWASP Consortium</h1>
-
-<p>
-
-Empowering developers with advanced cybersecurity training,
-ethical hacking labs and OWASP secure coding practices.
-
-</p>
-
-<a class="btn btn-primary">Join Training</a>
-
-</div>
-
-<div>
-
-<img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b"
-style="width:100%;border-radius:15px">
-
-</div>
-
-</div>
-
-</section>
-
-<!-- ABOUT -->
-
-<section id="about" class="section">
-
-<h2 class="section-title">Our Mission</h2>
-
-<p style="text-align:center;color:var(--muted);max-width:700px;margin:auto">
-
-We build a global community dedicated to improving software security
-through education, research, and OWASP practices.
-
-</p>
-
-</section>
-
-<!-- TRAINING -->
-
-<section id="training" class="section">
-
-<h2 class="section-title">Training Programs</h2>
-
-<div class="grid">
-
-<div class="card">
-
-<i class="fas fa-shield-halved"></i>
-
-<h3>Secure Coding</h3>
-
-<p>Learn OWASP Top 10 vulnerabilities and prevention.</p>
-
-</div>
-
-<div class="card">
-
-<i class="fas fa-terminal"></i>
-
-<h3>Ethical Hacking</h3>
-
-<p>Hands-on penetration testing and security labs.</p>
-
-</div>
-
-<div class="card">
-
-<i class="fas fa-flag"></i>
-
-<h3>CTF Challenges</h3>
-
-<p>Real-world capture-the-flag cybersecurity challenges.</p>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- STATS -->
-
-<section id="stats" class="section">
-
-<h2 class="section-title">Community Stats</h2>
-
-<div class="stats">
-
-<div>
-
-<div class="stat-number" data-target="150">0</div>
-Members
-
-</div>
-
-<div>
-
-<div class="stat-number" data-target="45">0</div>
-Workshops
-
-</div>
-
-<div>
-
-<div class="stat-number" data-target="12">0</div>
-Events
-
-</div>
-
-<div>
-
-<div class="stat-number" data-target="500">0</div>
-Students
-
-</div>
-
-</div>
-
-</section>
-
-<!-- TEAM -->
-
-<section id="team" class="section">
-
-<h2 class="section-title">Our Team</h2>
-
-<div class="grid team">
-
-<div class="card">
-
-<img src="https://randomuser.me/api/portraits/men/32.jpg">
-
-<h3>David Patel</h3>
-
-<p>Lead Trainer</p>
-
-</div>
-
-<div class="card">
-
-<img src="https://randomuser.me/api/portraits/women/44.jpg">
-
-<h3>Sofia Kim</h3>
-
-<p>Security Researcher</p>
-
-</div>
-
-<div class="card">
-
-<img src="https://randomuser.me/api/portraits/men/50.jpg">
-
-<h3>Rahul Singh</h3>
-
-<p>CTF Coordinator</p>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- FAQ -->
-
-<section class="section">
-
-<h2 class="section-title">FAQ</h2>
-
-<div class="faq">
-
-<div class="faq-item">
-
-<div class="faq-question">
-
-What is OWASP?
-<i class="fas fa-chevron-down"></i>
-
-</div>
-
-<div class="faq-answer">
-
-OWASP is an open community dedicated to improving software security.
-
-</div>
-
-</div>
-
-<div class="faq-item">
-
-<div class="faq-question">
-
-Who can join?
-<i class="fas fa-chevron-down"></i>
-
-</div>
-
-<div class="faq-answer">
-
-Developers, students, security engineers and anyone interested in cybersecurity.
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- CONTACT -->
-
-<section id="contact" class="section contact">
-
-<h2 class="section-title">Contact</h2>
-
-<div style="max-width:500px;margin:auto">
-
-<input placeholder="Name">
-
-<input placeholder="Email">
-
-<textarea placeholder="Message"></textarea>
-
-<button class="btn btn-primary" style="width:100%">Send Message</button>
-
-</div>
-
-</section>
-
-<!-- FOOTER -->
-
-<footer class="footer">
-
-<p>© 2026 Cybersecurity OWASP Consortium</p>
-
-</footer>
-
-<script>
-
-/* COUNTER ANIMATION */
-
-const counters=document.querySelectorAll("[data-target]")
-
-counters.forEach(counter=>{
-
-let target=+counter.dataset.target
-
-let count=0
-
-let step=target/100
-
-function update(){
-
-count+=step
-
-if(count<target){
-
-counter.innerText=Math.floor(count)
-
-requestAnimationFrame(update)
-
-}else{
-
-counter.innerText=target+"+"
-
-}
-
-}
-
-update()
-
-})
-
-/* FAQ */
-
-document.querySelectorAll(".faq-question").forEach(q=>{
-
-q.addEventListener("click",()=>{
-
-let a=q.nextElementSibling
-
-a.style.maxHeight=
-a.style.maxHeight ? null : a.scrollHeight+"px"
-
-})
-
-})
-
-</script>
-
+    <div class="bg-overlay"></div>
+    <div class="grid-bg"></div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-user-secret"></i> OWASP [CON]
+            </a>
+            <ul class="nav-links">
+                <li><a href="#about">Mission</a></li>
+                <li><a href="#training">Training</a></li>
+                <li><a href="#stats">Data</a></li>
+                <li><a href="#team">Nodes</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="reveal">
+                <h1>SECURE THE CODE.<br>PROTECT THE <span style="color:var(--accent2)">FUTURE.</span></h1>
+                <p>The premier consortium for developers to master the art of defensive engineering and ethical vulnerability research.</p>
+                <div style="display: flex; gap: 15px;">
+                    <a href="#training" class="btn btn-primary">Initialize Training <i class="fas fa-chevron-right"></i></a>
+                    <a href="#" class="btn" style="border: 1px solid var(--border)">View Docs</a>
+                </div>
+            </div>
+            <div class="hero-image-wrap reveal" style="transition-delay: 0.2s">
+                <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b" alt="Cybersecurity Hub">
+            </div>
+        </div>
+    </section>
+
+    <section id="training" class="section">
+        <h2 class="section-title">01. <span>Programs</span></h2>
+        <div class="grid">
+            <div class="card reveal">
+                <i class="fas fa-shield-virus"></i>
+                <h3>AppSec Mastery</h3>
+                <p>Comprehensive deep-dives into the OWASP Top 10 using enterprise-grade environments.</p>
+            </div>
+            <div class="card reveal" style="transition-delay: 0.1s">
+                <i class="fas fa-user-ninja"></i>
+                <h3>Red Team Ops</h3>
+                <p>Offensive security tactics, privilege escalation, and lateral movement simulations.</p>
+            </div>
+            <div class="card reveal" style="transition-delay: 0.2s">
+                <i class="fas fa-microchip"></i>
+                <h3>DevSecOps</h3>
+                <p>Automating security into the CI/CD pipeline with modern scanning toolsets.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="stats" class="section" style="background: rgba(0, 255, 159, 0.02)">
+        <div class="grid" style="text-align: center;">
+            <div class="reveal">
+                <div class="stat-number" style="font-size: 3.5rem; color: var(--accent);" data-target="1500">0</div>
+                <div style="text-transform: uppercase; letter-spacing: 2px;">Secured Nodes</div>
+            </div>
+            <div class="reveal" style="transition-delay: 0.1s">
+                <div class="stat-number" style="font-size: 3.5rem; color: var(--accent);" data-target="450">0</div>
+                <div style="text-transform: uppercase; letter-spacing: 2px;">Vulnerabilities Found</div>
+            </div>
+            <div class="reveal" style="transition-delay: 0.2s">
+                <div class="stat-number" style="font-size: 3.5rem; color: var(--accent);" data-target="85">0</div>
+                <div style="text-transform: uppercase; letter-spacing: 2px;">Expert Mentors</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <h2 class="section-title">02. <span>Connect</span></h2>
+        <div class="terminal-form reveal">
+            <div style="margin-bottom: 20px; color: #4ade80; font-size: 0.8rem;">// Establishing secure connection...</div>
+            <div class="form-group">
+                <label>IDENT_NAME</label>
+                <input type="text" class="terminal-input" placeholder="root@user">
+            </div>
+            <div class="form-group">
+                <label>IDENT_EMAIL</label>
+                <input type="email" class="terminal-input" placeholder="address@domain.com">
+            </div>
+            <div class="form-group">
+                <label>MESSAGE_BODY</label>
+                <textarea class="terminal-input" rows="4" placeholder="Enter transmission..."></textarea>
+            </div>
+            <button class="btn btn-primary" style="width: 100%; justify-content: center;">Execute Send</button>
+        </div>
+    </section>
+
+    <footer style="padding: 50px 2rem; border-top: 1px solid var(--border); text-align: center;">
+        <p style="color: var(--muted); font-size: 0.8rem;">&copy; 2026 OWASP Consortium. All rights encrypted.</p>
+    </footer>
+
+    <script>
+        // Intersection Observer for Reveal on Scroll
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Animated Counters with Intersection Observer
+        const startCounter = (el) => {
+            const target = +el.getAttribute('data-target');
+            let count = 0;
+            const speed = target / 50;
+            
+            const updateCount = () => {
+                if (count < target) {
+                    count += Math.ceil(speed);
+                    el.innerText = count;
+                    setTimeout(updateCount, 30);
+                } else {
+                    el.innerText = target + "+";
+                }
+            };
+            updateCount();
+        };
+
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
+                    startCounter(entry.target);
+                    entry.target.classList.add('counted');
+                }
+            });
+        }, { threshold: 1.0 });
+
+        document.querySelectorAll('.stat-number').forEach(num => statsObserver.observe(num));
+    </script>
 </body>
 </html>
